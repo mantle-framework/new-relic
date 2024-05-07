@@ -48,7 +48,7 @@ class New_Relic_Service_Provider extends Service_Provider {
 	/**
 	 * Boot the provider.
 	 */
-	public function boot(): void {
+	public function boot() {
 		parent::boot();
 
 		if ( ! static::is_supported() ) {
@@ -60,6 +60,8 @@ class New_Relic_Service_Provider extends Service_Provider {
 
 	/**
 	 * Check if the extension is supported.
+	 *
+	 * @return bool
 	 */
 	protected static function is_supported(): bool {
 		return extension_loaded( 'newrelic' )
@@ -72,7 +74,7 @@ class New_Relic_Service_Provider extends Service_Provider {
 	 *
 	 * @param Route_Matched $event Event instance.
 	 */
-	public function handle_route_matched( Route_Matched $event ): void {
+	public function handle_route_matched( Route_Matched $event ) {
 		if ( $event->route instanceof Route ) {
 			newrelic_name_transaction( $event->route->getPath() );
 			newrelic_add_custom_parameter( 'mantle-request', true );
@@ -108,8 +110,8 @@ class New_Relic_Service_Provider extends Service_Provider {
 	 *
 	 * @param WP $wp Global WP object.
 	 */
-	public function on_wp( WP $wp ): void {
-		if ( $this->named || ! static::is_supported() ) {
+	public function on_wp( WP $wp ) {
+		if ( $this->named || ! $this->is_supported() ) {
 			return;
 		}
 
