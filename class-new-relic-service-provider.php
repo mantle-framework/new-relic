@@ -93,10 +93,7 @@ class New_Relic_Service_Provider extends Service_Provider {
 				$route
 			);
 
-			if ( $name ) {
-				newrelic_name_transaction( $name );
-			}
-
+			newrelic_name_transaction( $name );
 			newrelic_add_custom_parameter( 'wp-api', 'true' );
 			newrelic_add_custom_parameter( 'wp-api-route', $route );
 		}
